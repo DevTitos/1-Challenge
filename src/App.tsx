@@ -82,16 +82,16 @@ function App() {
                   { id: 'challenges', label: '⚡ Challenges' },
                   { id: 'profile', label: '👤 Profile' }
                 ].map((tab) => (
+                  // In the Tabs.List section, fix the duplicate property:
                   <Tabs.Trigger 
                     key={tab.id}
                     value={tab.id} 
                     style={{ 
-                      color: 'white',
+                      color: activeTab === tab.id ? 'black' : 'white', // Remove duplicate color property
                       position: 'relative',
                       background: activeTab === tab.id 
                         ? 'linear-gradient(45deg, #ff00ff, #00ffff)' 
                         : 'transparent',
-                      color: activeTab === tab.id ? 'black' : 'white',
                       fontWeight: 'bold'
                     }}
                   >

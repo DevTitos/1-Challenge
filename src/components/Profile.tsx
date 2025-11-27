@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Flex, Text, Button, Card, TextField, Dialog } from '@radix-ui/themes';
+import { useState, useEffect } from 'react';
+import { Box, Flex, Text, Button, Card, Dialog } from '@radix-ui/themes';
 import { useCurrentAccount, useSuiClient } from '@onelabs/dapp-kit';
 import { motion } from 'framer-motion';
 import { AnimatedCard } from './AnimatedCard';
@@ -9,7 +9,7 @@ export function Profile() {
   const account = useCurrentAccount();
   const suiClient = useSuiClient();
   const [balance, setBalance] = useState<string>('0');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [faucetLoading, setFaucetLoading] = useState(false);
   const [showFaucetDialog, setShowFaucetDialog] = useState(false);
   const [faucetResult, setFaucetResult] = useState<{success: boolean; message: string} | null>(null);

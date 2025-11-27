@@ -1,4 +1,4 @@
-import { GameState, Piece, PieceType, PlayerColor, Position, Move, GameRules, GameSettings } from '../types/game';
+import { GameState, Piece, PlayerColor, Position, Move, GameRules, GameSettings } from '../types/game';
 
 export class ProfessionalCheckersGame {
   private state: GameState;

@@ -1,4 +1,5 @@
-import React from 'react';
+import { motion } from 'framer-motion';
+import { Box, Flex, Text, Button, Dialog } from '@radix-ui/themes';
 
 export function AnimatedCSSBackground() {
   return (

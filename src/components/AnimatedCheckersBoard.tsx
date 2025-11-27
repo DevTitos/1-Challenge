@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Box, Flex, Text, Button, Dialog } from '@radix-ui/themes';
 
@@ -29,7 +29,7 @@ export function AnimatedCheckersBoard({
   onOfferDraw,
   onNewGame
 }: AnimatedCheckersBoardProps) {
-  const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number } | null>(null);
+  const [, setHoveredCell] = useState<{ row: number; col: number } | null>(null);
   const [showResignConfirm, setShowResignConfirm] = useState(false);
   const [showDrawConfirm, setShowDrawConfirm] = useState(false);
 

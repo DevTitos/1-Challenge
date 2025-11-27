@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Button, Dialog, Flex, TextField, Text, Card } from '@radix-ui/themes';
+import { useState, useEffect } from 'react';
+import { Box, Button, Dialog, Flex, TextField, Text } from '@radix-ui/themes';
 import { useCurrentAccount } from '@onelabs/dapp-kit';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LeaderboardEntry, Player } from '../types/game';

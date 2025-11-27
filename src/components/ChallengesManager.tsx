@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Box, Card, Text, Flex, Button } from '@radix-ui/themes';
+import { useState } from 'react';
+import { Box, Text, Flex, Button } from '@radix-ui/themes';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useBlockchainGame } from '../hooks/useBlockchainGame';
 import { AnimatedButton } from './AnimatedButton';
