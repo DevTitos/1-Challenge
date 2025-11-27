@@ -45,6 +45,7 @@ export interface Move {
   to: Position;
   captures: Position[];
   isKingPromotion: boolean;
+  isMultipleJump?: boolean;
 }
 
 export interface GameState {
@@ -55,10 +56,23 @@ export interface GameState {
   mandatoryCaptures: Move[];
   gameStatus: 'playing' | 'red_won' | 'black_won' | 'draw';
   moveHistory: Move[];
+  consecutiveNonCaptureMoves: number; // For 40-move draw rule
+  lastCaptureOrKingMove: number; // Track progress for draw conditions
 }
 
 export interface GameRules {
   mandatoryCaptures: boolean;
   kingMovesMultiple: boolean;
   canCaptureBackwards: boolean;
+  flyingKings: boolean;
+  maxConsecutiveNonCaptureMoves: number;
+}
+
+export interface GameSettings {
+  timeControl?: {
+    initialTime: number; // seconds
+    increment: number; // seconds per move
+  };
+  stakeAmount: number;
+  rated: boolean;
 }

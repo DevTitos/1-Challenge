@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>1 Challenge</title>
+    <title>1 Challenge - 3D Checkers on OneChain</title>
 
     <style>
       /*
@@ -22,6 +22,10 @@
       body {
         line-height: 1.5;
         -webkit-font-smoothing: antialiased;
+        background: #0f0f23;
+        color: white;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        overflow-x: hidden;
       }
       img,
       picture,
@@ -50,7 +54,29 @@
       #__next {
         isolation: isolate;
       }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(45deg, #00ffff, #ff00ff);
+        border-radius: 4px;
+      }
+
+      /* Glow effects */
+      .glow {
+        filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.5));
+      }
     </style>
+    
+    <!-- Import Inter font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <div id="root"></div>
