@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useSuiClient, useCurrentAccount } from '@onelabs/dapp-kit';
+import { useCurrentAccount } from '@onelabs/dapp-kit';
 
 // Types for our game contract
 export interface GameChallenge {
@@ -13,13 +13,12 @@ export interface GameChallenge {
   createdAt: number;
 }
 
-// Mock contract interactions
 export function useBlockchainGame() {
-  const client = useSuiClient();
   const account = useCurrentAccount();
   const [challenges, setChallenges] = useState<GameChallenge[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [transactionHistory, setTransactionHistory] = useState<any[]>([]);
 
   // Load player challenges
   const loadChallenges = useCallback(async () => {
@@ -65,10 +64,9 @@ export function useBlockchainGame() {
     setLoading(true);
     setError(null);
     try {
-      // Mock implementation - replace with actual contract call
+      // Mock implementation
       console.log('Creating challenge:', { opponent, stakeAmount });
       
-      // Simulate transaction delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       const result = {
@@ -78,6 +76,15 @@ export function useBlockchainGame() {
       };
       
       if (result.success) {
+        // Add to transaction history
+        setTransactionHistory(prev => [{
+          type: 'create_challenge',
+          transactionId: result.transactionId,
+          timestamp: Date.now(),
+          opponent,
+          stakeAmount
+        }, ...prev]);
+        
         // Add the new challenge to local state
         const newChallenge: GameChallenge = {
           id: result.challengeId!,
@@ -118,6 +125,14 @@ export function useBlockchainGame() {
       };
       
       if (result.success) {
+        // Add to transaction history
+        setTransactionHistory(prev => [{
+          type: 'accept_challenge',
+          transactionId: result.transactionId,
+          timestamp: Date.now(),
+          challengeId
+        }, ...prev]);
+        
         // Update local state
         setChallenges(prev => prev.map(challenge => 
           challenge.id === challengeId 
@@ -152,7 +167,20 @@ export function useBlockchainGame() {
         transactionId: 'mock_move_tx_' + Date.now()
       };
       
-      return result;
+      if (result.success) {
+        // Add to transaction history
+        setTransactionHistory(prev => [{
+          type: 'submit_move',
+          transactionId: result.transactionId,
+          timestamp: Date.now(),
+          challengeId,
+          move
+        }, ...prev]);
+        
+        return result;
+      } else {
+        throw new Error('Failed to submit move');
+      }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error';
       setError(errorMessage);
@@ -163,7 +191,7 @@ export function useBlockchainGame() {
   }, []);
 
   // Get player stats
-  const getPlayerStats = useCallback(async (playerAddress: string) => {
+  const getPlayerStats = useCallback(async () => {
     try {
       // Mock implementation
       return {
@@ -174,6 +202,21 @@ export function useBlockchainGame() {
       };
     } catch (err) {
       console.error('Error fetching player stats:', err);
+      return null;
+    }
+  }, []);
+
+  // Get transaction status
+  const getTransactionStatus = useCallback(async (digest: string) => {
+    try {
+      // Mock implementation
+      return {
+        digest,
+        status: 'success',
+        timestamp: Date.now()
+      };
+    } catch (error) {
+      console.error('Error fetching transaction:', error);
       return null;
     }
   }, []);
@@ -189,12 +232,14 @@ export function useBlockchainGame() {
     challenges,
     loading,
     error,
+    transactionHistory,
     createChallenge,
     acceptChallenge,
     submitMove,
     getPlayerStats,
+    getTransactionStatus,
     loadChallenges,
-    hasContract: true, // For now, always true with mock data
+    hasContract: true,
     isConnected: !!account
   };
 }

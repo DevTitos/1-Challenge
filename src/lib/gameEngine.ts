@@ -1,12 +1,7 @@
-import { GameState, Piece, PieceType, PlayerColor, Position, Move, GameRules } from '../types/game';
+import { GameState, Piece, Position, Move } from '../types/game';
 
 export class CheckersGame {
   private state: GameState;
-  private rules: GameRules = {
-    mandatoryCaptures: true,
-    kingMovesMultiple: true,
-    canCaptureBackwards: true
-  };
 
   constructor() {
     this.state = this.getInitialState();
@@ -15,7 +10,6 @@ export class CheckersGame {
   private getInitialState(): GameState {
     const board: (Piece | null)[][] = Array(8).fill(null).map(() => Array(8).fill(null));
     
-    // Initialize pieces
     for (let row = 0; row < 8; row++) {
       for (let col = 0; col < 8; col++) {
         if ((row + col) % 2 === 1) {
@@ -35,7 +29,9 @@ export class CheckersGame {
       validMoves: [],
       mandatoryCaptures: [],
       gameStatus: 'playing',
-      moveHistory: []
+      moveHistory: [],
+      consecutiveNonCaptureMoves: 0,
+      lastCaptureOrKingMove: 0
     };
   }
 
@@ -83,13 +79,11 @@ export class CheckersGame {
     }
 
     this.state.validMoves = moves;
-    this.state.mandatoryCaptures = [];
   }
 
   public makeMove(move: Move): boolean {
     if (!this.state.selectedPiece) return false;
 
-    // Validate move
     const isValidMove = this.state.validMoves.some(validMove =>
       validMove.to.row === move.to.row && validMove.to.col === move.to.col
     );
@@ -118,7 +112,6 @@ export class CheckersGame {
     // Reset selection
     this.state.selectedPiece = null;
     this.state.validMoves = [];
-    this.state.mandatoryCaptures = [];
 
     return true;
   }

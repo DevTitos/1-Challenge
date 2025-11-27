@@ -9,10 +9,9 @@ import { AnimatedButton } from "./components/AnimatedButton";
 import { AnimatedCheckersBoard } from "./components/AnimatedCheckersBoard";
 import { useCheckersGame } from "./hooks/useCheckersGame";
 import { ChallengesManager } from "./components/ChallengesManager";
-import { Profile } from './components/Profile';
+import { Profile } from "./components/Profile";
 
 function App() {
-  const currentAccount = useCurrentAccount();
   const [activeTab, setActiveTab] = useState('game');
 
   return (
@@ -78,10 +77,10 @@ function App() {
                 padding: '4px'
               }}>
                 {[
-                  { id: 'game', label: '🎮 Play Game', emoji: '🎮' },
-                  { id: 'leaderboard', label: '🏆 Leaderboard', emoji: '🏆' },
-                  { id: 'challenges', label: '⚡ Challenges', emoji: '⚡' },
-                  { id: 'profile', label: '👤 Profile', emoji: '👤' }
+                  { id: 'game', label: '🎮 Play Game' },
+                  { id: 'leaderboard', label: '🏆 Leaderboard' },
+                  { id: 'challenges', label: '⚡ Challenges' },
+                  { id: 'profile', label: '👤 Profile' }
                 ].map((tab) => (
                   <Tabs.Trigger 
                     key={tab.id}
@@ -111,7 +110,7 @@ function App() {
                     transition={{ duration: 0.3 }}
                   >
                     <Tabs.Content value="game">
-                      <GameContent />
+                      <GameContent setActiveTab={setActiveTab} />
                     </Tabs.Content>
 
                     <Tabs.Content value="leaderboard">
@@ -125,7 +124,6 @@ function App() {
                     <Tabs.Content value="profile">
                       <Profile />
                     </Tabs.Content>
-                    
                   </motion.div>
                 </AnimatePresence>
               </Box>
@@ -137,7 +135,11 @@ function App() {
   );
 }
 
-function GameContent() {
+interface GameContentProps {
+  setActiveTab: (tab: string) => void;
+}
+
+function GameContent({ setActiveTab }: GameContentProps) {
   const account = useCurrentAccount();
   const {
     gameState,
@@ -174,7 +176,7 @@ function GameContent() {
               <Text size="2" style={{ color: '#00ffff' }}>🎮 Professional Checkers Rules</Text>
               <Text size="2" style={{ color: '#00ffff' }}>🏆 Compete on the Leaderboard</Text>
               <Text size="2" style={{ color: '#00ffff' }}>⚡ Challenge Other Players</Text>
-              <Text size="2" style={{ color: '#00ffff' }}>💰 Stake ONT Tokens</Text>
+              <Text size="2" style={{ color: '#00ffff' }}>💰 Stake ONE Tokens</Text>
             </Flex>
           </Box>
         </AnimatedCard>
